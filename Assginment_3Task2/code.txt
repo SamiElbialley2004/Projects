@@ -1,0 +1,15 @@
+int main()
+{
+int x=9;
+int khaled=10;
+double w=32;
+khaled=90;
+w=50;
+char c='r';
+float r=3.6;
+c='k';
+r=5.2;
+double p=7.15;
+return 0
+}
+

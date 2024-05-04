@@ -1,0 +1,3 @@
+C:/Users/elbia/CLionProjects/Assginment_3Task2/cmake-build-debug/CMakeFiles/Assginment_3Task2.dir
+C:/Users/elbia/CLionProjects/Assginment_3Task2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/elbia/CLionProjects/Assginment_3Task2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
