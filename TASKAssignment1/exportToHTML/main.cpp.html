@@ -1,0 +1,529 @@
+<html>
+<head>
+<title>main.cpp</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080;}
+.s1 { color: #bbb529;}
+.s2 { color: #a9b7c6;}
+.s3 { color: #6a8759;}
+.s4 { color: #cc7832;}
+.s5 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.cpp</font>
+</center></td></tr></table>
+<pre><span class="s0">/*#include &lt;iostream&gt; 
+#include&lt;bits/stdc++.h&gt; 
+#include&lt;fstream&gt; 
+using namespace std; 
+void SelectionSort(int arr[],int n, int&amp; comparison,int&amp; moves) 
+{ 
+ comparison=moves=0; 
+  for(int i=0,min,j;i&lt;n-1;i++) 
+  { 
+     for( j=i+1,min=i;j&lt;n;j++) { 
+         comparison++; 
+         if (arr[j] &lt; arr[min]) { 
+ 
+             min = j; 
+ 
+         } 
+     } 
+         swap(arr[i], arr[min]); 
+          moves+=3; 
+ 
+ 
+ 
+  } 
+ 
+ 
+} 
+void Sorting(int arr[], int left, int middel, int right, int&amp; comparison,int&amp; moves) 
+ 
+{  int n1=middel-left+1,n2=right-middel; 
+    comparison=moves=0; 
+    int leftarr[n1],rightarr[n2]; 
+    for(int i=0;i&lt;n1;i++) 
+    { 
+        leftarr[i]=arr[i+left]; 
+      moves++;  //? 
+ 
+    } 
+    for(int j=0;j&lt;n2;j++) 
+    { 
+        rightarr[j]=arr[middel+1+j]; 
+        moves++;          //? 
+     } 
+    int i=0,j=0,k=left; 
+    while(i&lt;n1 &amp;&amp;j &lt;n2) 
+    { comparison++; 
+        if(leftarr[i]&lt;rightarr[j]) { 
+            comparison++; 
+            arr[k] = leftarr[i]; 
+            k++; 
+            i++; 
+            moves++; 
+        } 
+        else 
+        { 
+            arr[k] = rightarr[j]; 
+            k++; 
+            j++; 
+            moves++; 
+ 
+        } 
+ 
+    } 
+    while(i&lt;n1) { 
+        arr[k++] = leftarr[i++]; 
+    moves++; 
+    } 
+    while (j&lt;n2) { 
+        arr[k++] = rightarr[j++]; 
+    moves++; 
+    } 
+ 
+    } 
+ 
+void MergeSort(int arr[],int left,int right,int&amp; comparison, int&amp; moves) 
+{ 
+    if(right&gt;left) 
+    { int middel=(left+right)/2; 
+        MergeSort(arr,left,middel,comparison,moves); 
+        MergeSort(arr,middel+1,right,comparison,moves); 
+        Sorting(arr, left, middel, right,comparison,moves); 
+ 
+    } 
+ 
+} 
+ 
+void ShellSort( int arr[], int n,int&amp; comparison ,int&amp; moves) 
+{ int gap=n/2; 
+    comparison=0;moves=0; 
+    while(gap&gt;0) 
+    { 
+        int i,j,temp; 
+        for(i=gap;i&lt;n;i++) 
+        { temp=arr[i]; 
+            moves++; 
+            //? 
+            for(j=i;j&gt;=gap;j-=gap) 
+            {   comparison++; 
+                if(arr[j-gap]&gt;temp) 
+                { 
+                    arr[j]=arr[j-gap]; 
+                    moves++; 
+                } 
+                else{break;} 
+            } 
+            arr[j]=temp; 
+            moves++; 
+ 
+        } 
+    gap/=2; 
+    } 
+} 
+ 
+int main() { 
+    int comparisons, moves; 
+    string line = &quot;\n&quot;; 
+    ifstream input; 
+    int count = 0; 
+    input.open(&quot;arrays.txt&quot;); 
+    while (getline(input, line))++count; 
+    input.close(); 
+ 
+    input.open(&quot;arrays.txt&quot;); 
+    if (input.is_open()) { 
+        while (count--) { 
+            int n; 
+            input &gt;&gt; n; 
+            int c[n], a[n], b[n], comparison, moves; 
+ 
+            for (int i = 0; i &lt; n; i++) 
+                input &gt;&gt; a[i]; 
+            for (int i = 0; i &lt; n; i++) { 
+                b[i] = a[i]; 
+                c[i] = a[i]; 
+            } 
+ 
+            cout &lt;&lt; &quot; Original array&quot; &lt;&lt; &quot; : &quot;; 
+            for (int i = 0; i &lt; n; i++) 
+                cout &lt;&lt; a[i] &lt;&lt; &quot; &quot;; 
+            cout &lt;&lt; endl; 
+            cout &lt;&lt; &quot; Selection Sort : &quot; &lt;&lt; endl; 
+            SelectionSort(a, n, comparison, moves); 
+            cout &lt;&lt; &quot;   sorted array&quot; &lt;&lt; &quot; : &quot;; 
+            for (int i = 0; i &lt; n; i++) 
+                cout &lt;&lt; a[i] &lt;&lt; &quot; &quot;; 
+            cout &lt;&lt; endl; 
+            cout &lt;&lt; &quot;  Comparisons : &quot; &lt;&lt; comparison; 
+            cout &lt;&lt; endl &lt;&lt; &quot;   Moves : &quot; &lt;&lt; &quot; &quot; &lt;&lt; moves &lt;&lt; endl; 
+            comparison = moves = 0; 
+            cout &lt;&lt; endl; 
+            cout &lt;&lt; &quot; Merge Sort : &quot; &lt;&lt; endl; 
+            MergeSort(b, 0, n - 1, comparison, moves); 
+            cout &lt;&lt; &quot;   sorted array&quot; &lt;&lt; &quot; : &quot;; 
+            for (int i = 0; i &lt; n; i++) 
+                cout &lt;&lt; b[i] &lt;&lt; &quot; &quot;; 
+            cout &lt;&lt; endl; 
+            cout &lt;&lt; &quot;   Comparisons : &quot; &lt;&lt; comparison; 
+            cout &lt;&lt; endl &lt;&lt; &quot;   Moves : &quot; &lt;&lt; &quot; &quot; &lt;&lt; moves &lt;&lt; endl; 
+            comparison = moves = 0; 
+            cout &lt;&lt; endl; 
+            cout &lt;&lt; &quot; Shell Sort : &quot; &lt;&lt; endl; 
+            ShellSort(c, n, comparison, moves); 
+            cout &lt;&lt; &quot;   sorted array &quot; &lt;&lt; &quot; : &quot;; 
+            for (int i = 0; i &lt; n; i++) 
+                cout &lt;&lt; c[i] &lt;&lt; &quot; &quot;; 
+            cout &lt;&lt; endl; 
+            cout &lt;&lt; &quot;   Comparisons : &quot; &lt;&lt; comparison; 
+            cout &lt;&lt; endl &lt;&lt; &quot;   Moves : &quot; &lt;&lt; &quot; &quot; &lt;&lt; moves &lt;&lt; endl; 
+            comparison = moves = 0; 
+            cout &lt;&lt; &quot; -------------------------------------------------------------&quot; &lt;&lt; endl; 
+ 
+        } 
+        input.close(); 
+    } 
+} 
+ 
+*/</span><span class="s1">#include </span><span class="s3">&lt;iostream&gt;</span>
+<span class="s1">#include</span><span class="s3">&lt;bits/stdc++.h&gt;</span>
+<span class="s1">#include</span><span class="s3">&lt;fstream&gt;</span>
+<span class="s4">using namespace </span><span class="s2">std</span><span class="s4">;</span>
+
+
+
+<span class="s4">void </span><span class="s2">SelectionSort(</span><span class="s4">int </span><span class="s2">arr[]</span><span class="s4">,int </span><span class="s2">n</span><span class="s4">, int</span><span class="s2">&amp; comparison</span><span class="s4">,int</span><span class="s2">&amp; moves)</span>
+<span class="s2">{</span>
+    <span class="s2">comparison=moves=</span><span class="s5">0</span><span class="s4">;</span>
+    <span class="s4">for</span><span class="s2">(</span><span class="s4">int </span><span class="s2">i=</span><span class="s5">0</span><span class="s4">,</span><span class="s2">min</span><span class="s4">,</span><span class="s2">j</span><span class="s4">;</span><span class="s2">i&lt;n-</span><span class="s5">1</span><span class="s4">;</span><span class="s2">i++)</span>
+    <span class="s2">{</span>
+        <span class="s4">for</span><span class="s2">( j=i+</span><span class="s5">1</span><span class="s4">,</span><span class="s2">min=i</span><span class="s4">;</span><span class="s2">j&lt;n</span><span class="s4">;</span><span class="s2">j++) {</span>
+            <span class="s2">comparison++</span><span class="s4">;</span>
+            <span class="s4">if </span><span class="s2">(arr[j] &lt; arr[min]) {</span>
+
+                <span class="s2">min = j</span><span class="s4">;</span>
+
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+        <span class="s2">swap(arr[i]</span><span class="s4">, </span><span class="s2">arr[min])</span><span class="s4">;</span>
+        <span class="s2">moves+=</span><span class="s5">3</span><span class="s4">;</span>
+
+
+
+    <span class="s2">}</span>
+
+
+<span class="s2">}</span>
+<span class="s4">void </span><span class="s2">Sorting(</span><span class="s4">int </span><span class="s2">arr[]</span><span class="s4">, int </span><span class="s2">left</span><span class="s4">, int </span><span class="s2">middel</span><span class="s4">, int </span><span class="s2">right</span><span class="s4">, int</span><span class="s2">&amp; comparison</span><span class="s4">,int</span><span class="s2">&amp; moves)</span>
+
+<span class="s2">{  </span><span class="s4">int </span><span class="s2">n1=middel-left+</span><span class="s5">1</span><span class="s4">,</span><span class="s2">n2=right-middel</span><span class="s4">;</span>
+    <span class="s2">comparison=moves=</span><span class="s5">0</span><span class="s4">;</span>
+    <span class="s4">int </span><span class="s2">leftarr[n1]</span><span class="s4">,</span><span class="s2">rightarr[n2]</span><span class="s4">;</span>
+    <span class="s4">for</span><span class="s2">(</span><span class="s4">int </span><span class="s2">i=</span><span class="s5">0</span><span class="s4">;</span><span class="s2">i&lt;n1</span><span class="s4">;</span><span class="s2">i++)</span>
+    <span class="s2">{</span>
+        <span class="s2">leftarr[i]=arr[i+left]</span><span class="s4">;</span>
+        <span class="s2">moves++</span><span class="s4">;  </span><span class="s0">//?</span>
+
+    <span class="s2">}</span>
+    <span class="s4">for</span><span class="s2">(</span><span class="s4">int </span><span class="s2">j=</span><span class="s5">0</span><span class="s4">;</span><span class="s2">j&lt;n2</span><span class="s4">;</span><span class="s2">j++)</span>
+    <span class="s2">{</span>
+        <span class="s2">rightarr[j]=arr[middel+</span><span class="s5">1</span><span class="s2">+j]</span><span class="s4">;</span>
+        <span class="s2">moves++</span><span class="s4">;          </span><span class="s0">//?</span>
+    <span class="s2">}</span>
+    <span class="s4">int </span><span class="s2">i=</span><span class="s5">0</span><span class="s4">,</span><span class="s2">j=</span><span class="s5">0</span><span class="s4">,</span><span class="s2">k=left</span><span class="s4">;</span>
+    <span class="s4">while</span><span class="s2">(i&lt;n1 &amp;&amp;j &lt;n2)</span>
+    <span class="s2">{ comparison++</span><span class="s4">;</span>
+        <span class="s4">if</span><span class="s2">(leftarr[i]&lt;rightarr[j]) {</span>
+            <span class="s2">comparison++</span><span class="s4">;</span>
+            <span class="s2">arr[k] = leftarr[i]</span><span class="s4">;</span>
+            <span class="s2">k++</span><span class="s4">;</span>
+            <span class="s2">i++</span><span class="s4">;</span>
+            <span class="s2">moves++</span><span class="s4">;</span>
+        <span class="s2">}</span>
+        <span class="s4">else</span>
+        <span class="s2">{</span>
+            <span class="s2">arr[k] = rightarr[j]</span><span class="s4">;</span>
+            <span class="s2">k++</span><span class="s4">;</span>
+            <span class="s2">j++</span><span class="s4">;</span>
+            <span class="s2">moves++</span><span class="s4">;</span>
+
+        <span class="s2">}</span>
+
+    <span class="s2">}</span>
+    <span class="s4">while</span><span class="s2">(i&lt;n1) {</span>
+        <span class="s2">arr[k++] = leftarr[i++]</span><span class="s4">;</span>
+        <span class="s2">moves++</span><span class="s4">;</span>
+    <span class="s2">}</span>
+    <span class="s4">while </span><span class="s2">(j&lt;n2) {</span>
+        <span class="s2">arr[k++] = rightarr[j++]</span><span class="s4">;</span>
+        <span class="s2">moves++</span><span class="s4">;</span>
+    <span class="s2">}</span>
+
+<span class="s2">}</span>
+
+<span class="s4">void </span><span class="s2">MergeSort(</span><span class="s4">int </span><span class="s2">arr[]</span><span class="s4">,int </span><span class="s2">left</span><span class="s4">,int </span><span class="s2">right</span><span class="s4">,int</span><span class="s2">&amp; comparison</span><span class="s4">, int</span><span class="s2">&amp; moves)</span>
+<span class="s2">{</span>
+    <span class="s4">if</span><span class="s2">(right&gt;left)</span>
+    <span class="s2">{ </span><span class="s4">int </span><span class="s2">middel=(left+right)/</span><span class="s5">2</span><span class="s4">;</span>
+        <span class="s2">MergeSort(arr</span><span class="s4">,</span><span class="s2">left</span><span class="s4">,</span><span class="s2">middel</span><span class="s4">,</span><span class="s2">comparison</span><span class="s4">,</span><span class="s2">moves)</span><span class="s4">;</span>
+        <span class="s2">MergeSort(arr</span><span class="s4">,</span><span class="s2">middel+</span><span class="s5">1</span><span class="s4">,</span><span class="s2">right</span><span class="s4">,</span><span class="s2">comparison</span><span class="s4">,</span><span class="s2">moves)</span><span class="s4">;</span>
+        <span class="s2">Sorting(arr</span><span class="s4">, </span><span class="s2">left</span><span class="s4">, </span><span class="s2">middel</span><span class="s4">, </span><span class="s2">right</span><span class="s4">,</span><span class="s2">comparison</span><span class="s4">,</span><span class="s2">moves)</span><span class="s4">;</span>
+
+    <span class="s2">}</span>
+
+<span class="s2">}</span>
+
+<span class="s4">void </span><span class="s2">ShellSort( </span><span class="s4">int </span><span class="s2">arr[]</span><span class="s4">, int </span><span class="s2">n</span><span class="s4">,int</span><span class="s2">&amp; comparison </span><span class="s4">,int</span><span class="s2">&amp; moves)</span>
+<span class="s2">{ </span><span class="s4">int </span><span class="s2">gap=n/</span><span class="s5">2</span><span class="s4">;</span>
+    <span class="s2">comparison=</span><span class="s5">0</span><span class="s4">;</span><span class="s2">moves=</span><span class="s5">0</span><span class="s4">;</span>
+    <span class="s4">while</span><span class="s2">(gap&gt;</span><span class="s5">0</span><span class="s2">)</span>
+    <span class="s2">{</span>
+        <span class="s4">int </span><span class="s2">i</span><span class="s4">,</span><span class="s2">j</span><span class="s4">,</span><span class="s2">temp</span><span class="s4">;</span>
+        <span class="s4">for</span><span class="s2">(i=gap</span><span class="s4">;</span><span class="s2">i&lt;n</span><span class="s4">;</span><span class="s2">i++)</span>
+        <span class="s2">{ temp=arr[i]</span><span class="s4">;</span>
+            <span class="s2">moves++</span><span class="s4">;</span>
+            <span class="s0">//?</span>
+            <span class="s4">for</span><span class="s2">(j=i</span><span class="s4">;</span><span class="s2">j&gt;=gap</span><span class="s4">;</span><span class="s2">j-=gap) </span><span class="s0">//? should i write copmarison inside it?</span>
+            <span class="s2">{   comparison++</span><span class="s4">; </span><span class="s0">//?</span>
+                <span class="s4">if</span><span class="s2">(arr[j-gap]&gt;temp)</span>
+                <span class="s2">{</span>
+                    <span class="s2">arr[j]=arr[j-gap]</span><span class="s4">;</span>
+                    <span class="s2">moves++</span><span class="s4">;</span>
+                <span class="s2">}</span>
+                <span class="s4">else</span><span class="s2">{</span><span class="s4">break;</span><span class="s2">}</span>
+            <span class="s2">}</span>
+            <span class="s2">arr[j]=temp</span><span class="s4">;</span>
+            <span class="s2">moves++</span><span class="s4">;</span>
+            <span class="s0">//?</span>
+        <span class="s2">}</span>
+        <span class="s2">gap/=</span><span class="s5">2</span><span class="s4">;</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+
+<span class="s4">void </span><span class="s2">insertionS(</span><span class="s4">int </span><span class="s2">a[]</span><span class="s4">, int </span><span class="s2">n</span><span class="s4">,int</span><span class="s2">&amp; co</span><span class="s4">,int</span><span class="s2">&amp; mo)</span>
+<span class="s2">{</span>
+
+    <span class="s4">for </span><span class="s2">(</span><span class="s4">int </span><span class="s2">i = </span><span class="s5">1</span><span class="s4">;</span><span class="s2">i &lt; n</span><span class="s4">;</span><span class="s2">i++)</span>
+
+
+    <span class="s2">{</span>
+
+        <span class="s4">int </span><span class="s2">value = a[i]</span><span class="s4">;</span>
+
+        <span class="s4">int </span><span class="s2">indx = i-</span><span class="s5">1</span><span class="s4">;</span>
+
+        <span class="s4">while </span><span class="s2">(indx &gt;= </span><span class="s5">0</span><span class="s2">)</span>
+        <span class="s2">{ co++</span><span class="s4">;</span>
+
+            <span class="s4">if </span><span class="s2">(a[indx ] &gt; value)</span>
+            <span class="s2">{</span>
+
+
+                <span class="s2">a[indx+</span><span class="s5">1</span><span class="s2">] = a[indx]</span><span class="s4">;</span>
+                <span class="s2">indx--</span><span class="s4">;</span>
+                <span class="s2">mo++</span><span class="s4">;</span>
+            <span class="s2">}</span>
+            <span class="s4">else</span>
+                <span class="s4">break;</span>
+
+
+
+        <span class="s2">}</span>
+        <span class="s2">a[indx+</span><span class="s5">1</span><span class="s2">] = value</span><span class="s4">;</span>
+
+    <span class="s2">}</span>
+
+
+
+<span class="s2">}</span>
+
+
+
+
+
+<span class="s4">int </span><span class="s2">Binary_RSort(</span><span class="s4">int </span><span class="s2">a[]</span><span class="s4">, int </span><span class="s2">key</span><span class="s4">, int </span><span class="s2">l</span><span class="s4">, int </span><span class="s2">h</span><span class="s4">,int</span><span class="s2">&amp; co</span><span class="s4">,int</span><span class="s2">&amp;mo)</span>
+<span class="s2">{</span>
+
+
+
+    <span class="s4">int </span><span class="s2">m = (l + h) / </span><span class="s5">2</span><span class="s4">;</span>
+
+<span class="s2">co++</span><span class="s4">;</span>
+    <span class="s4">if </span><span class="s2">(h &lt;= l &amp;&amp; key &gt; a[l])</span>
+    <span class="s2">{</span>
+
+        <span class="s4">return </span><span class="s2">l + </span><span class="s5">1</span><span class="s4">;</span>
+    <span class="s2">}</span>
+
+
+    <span class="s4">if </span><span class="s2">(h &lt;= l &amp;&amp; key &lt; a[l])</span>
+    <span class="s2">{</span>
+
+        <span class="s4">return </span><span class="s2">l</span><span class="s4">;</span>
+    <span class="s2">}</span>
+
+<span class="s2">co++</span><span class="s4">;</span>
+
+    <span class="s4">if </span><span class="s2">(key &gt; a[m])</span>
+    <span class="s2">{</span>
+
+
+        <span class="s4">return </span><span class="s2">Binary_RSort(a</span><span class="s4">, </span><span class="s2">key</span><span class="s4">, </span><span class="s2">m + </span><span class="s5">1</span><span class="s4">, </span><span class="s2">h</span><span class="s4">,</span><span class="s2">co</span><span class="s4">,</span><span class="s2">mo)</span><span class="s4">;</span>
+
+    <span class="s2">}</span>
+
+
+    <span class="s4">if </span><span class="s2">(key &lt; a[m])</span>
+    <span class="s2">{</span>
+
+
+        <span class="s4">return </span><span class="s2">Binary_RSort(a</span><span class="s4">, </span><span class="s2">key</span><span class="s4">, </span><span class="s2">l</span><span class="s4">, </span><span class="s2">m - </span><span class="s5">1</span><span class="s4">,</span><span class="s2">co</span><span class="s4">,</span><span class="s2">mo)</span><span class="s4">;</span>
+
+    <span class="s2">}</span>
+
+
+
+    <span class="s4">if </span><span class="s2">(key == a[m])</span>
+    <span class="s2">{</span>
+
+        <span class="s4">return </span><span class="s2">m + </span><span class="s5">1</span><span class="s4">;</span>
+    <span class="s2">}</span>
+
+
+<span class="s2">}</span>
+
+
+
+<span class="s4">void </span><span class="s2">Isertion(</span><span class="s4">int </span><span class="s2">a[]</span><span class="s4">, int </span><span class="s2">n</span><span class="s4">,int</span><span class="s2">&amp;co</span><span class="s4">,int</span><span class="s2">&amp;mo)</span>
+<span class="s2">{</span>
+    <span class="s4">int </span><span class="s2">pos</span><span class="s4">, </span><span class="s2">value</span><span class="s4">, </span><span class="s2">p</span><span class="s4">, </span><span class="s2">j</span><span class="s4">;</span>
+    <span class="s4">for </span><span class="s2">(p = </span><span class="s5">1</span><span class="s4">;</span><span class="s2">p &lt; n</span><span class="s4">;</span><span class="s2">p++)</span>
+    <span class="s2">{</span>
+        <span class="s2">j = p - </span><span class="s5">1</span><span class="s4">;</span>
+        <span class="s2">value = a[p]</span><span class="s4">;</span>
+        <span class="s2">mo++</span><span class="s4">;</span>
+        <span class="s2">pos = Binary_RSort(a</span><span class="s4">, </span><span class="s2">value</span><span class="s4">,</span><span class="s5">0</span><span class="s4">,</span><span class="s2">j</span><span class="s4">,</span><span class="s2">co</span><span class="s4">,</span><span class="s2">mo)</span><span class="s4">;</span>
+
+        <span class="s4">while </span><span class="s2">(j &gt;= pos)</span>
+        <span class="s2">{</span>
+            <span class="s2">mo++</span><span class="s4">;</span>
+            <span class="s2">a[j + </span><span class="s5">1</span><span class="s2">] = a[j]</span><span class="s4">;</span>
+
+            <span class="s2">j--</span><span class="s4">;</span>
+
+        <span class="s2">}</span>
+        <span class="s2">a[j+</span><span class="s5">1</span><span class="s2">] = value</span><span class="s4">;</span>
+        <span class="s2">mo++</span><span class="s4">;</span>
+
+    <span class="s2">}</span>
+
+
+
+<span class="s2">}</span>
+
+
+
+
+
+
+
+<span class="s4">int </span><span class="s2">main()</span>
+<span class="s2">{ </span><span class="s4">int </span><span class="s2">comparisons=</span><span class="s5">0</span><span class="s4">, </span><span class="s2">moves=</span><span class="s5">0</span><span class="s4">;</span>
+    <span class="s2">string line = </span><span class="s3">&quot;</span><span class="s4">\n</span><span class="s3">&quot;</span><span class="s4">;</span>
+
+    <span class="s4">int </span><span class="s2">k</span><span class="s4">;</span>
+    <span class="s2">cout&lt;&lt;</span><span class="s3">&quot;                     TASK 1 :                     &quot;</span><span class="s2">&lt;&lt;endl</span><span class="s4">;</span>
+    <span class="s2">cout &lt;&lt; </span><span class="s3">&quot;enter a size&quot; </span><span class="s2">&lt;&lt; endl</span><span class="s4">;</span>
+    <span class="s2">cin &gt;&gt;k </span><span class="s4">;</span>
+    <span class="s4">int </span><span class="s2">a[k]</span><span class="s4">;</span>
+    <span class="s2">k = </span><span class="s4">sizeof</span><span class="s2">(a) / </span><span class="s4">sizeof</span><span class="s2">(a[</span><span class="s5">0</span><span class="s2">])</span><span class="s4">;</span>
+    <span class="s2">cout &lt;&lt; </span><span class="s3">&quot;enter array elements &quot; </span><span class="s2">&lt;&lt; endl</span><span class="s4">;</span>
+    <span class="s4">for </span><span class="s2">(</span><span class="s4">int </span><span class="s2">i = </span><span class="s5">0</span><span class="s4">; </span><span class="s2">i &lt; k</span><span class="s4">; </span><span class="s2">i++)</span>
+        <span class="s2">cin &gt;&gt;a[i]</span><span class="s4">;</span>
+
+
+    <span class="s2">cout &lt;&lt; endl &lt;&lt; </span><span class="s3">&quot;Sorted array using linear search: </span><span class="s4">\n</span><span class="s3">&quot;</span><span class="s4">;</span>
+    <span class="s2">insertionS(a</span><span class="s4">, </span><span class="s2">k</span><span class="s4">,</span><span class="s2">comparisons</span><span class="s4">,</span><span class="s2">moves)</span><span class="s4">;</span>
+    <span class="s4">for </span><span class="s2">(</span><span class="s4">int </span><span class="s2">i = </span><span class="s5">0</span><span class="s4">; </span><span class="s2">i &lt; k</span><span class="s4">; </span><span class="s2">i++)</span>
+        <span class="s2">cout &lt;&lt; </span><span class="s3">&quot; &quot; </span><span class="s2">&lt;&lt; a[i]</span><span class="s4">;</span>
+    <span class="s2">cout&lt;&lt;endl&lt;&lt;comparisons&lt;&lt;</span><span class="s3">&quot; &quot;</span><span class="s2">&lt;&lt;moves&lt;&lt;endl</span><span class="s4">;</span>
+   <span class="s2">comparisons=moves=</span><span class="s5">0</span><span class="s4">;</span>
+
+    <span class="s2">cout &lt;&lt; endl&lt;&lt;</span><span class="s3">&quot;Sorted array using binary search: </span><span class="s4">\n</span><span class="s3">&quot;</span><span class="s4">;</span>
+    <span class="s2">Isertion(a</span><span class="s4">, </span><span class="s2">k</span><span class="s4">,</span><span class="s2">comparisons</span><span class="s4">,</span><span class="s2">moves)</span><span class="s4">;</span>
+    <span class="s4">for </span><span class="s2">(</span><span class="s4">int </span><span class="s2">i = </span><span class="s5">0</span><span class="s4">; </span><span class="s2">i &lt; k</span><span class="s4">; </span><span class="s2">i++)</span>
+        <span class="s2">cout &lt;&lt; </span><span class="s3">&quot; &quot; </span><span class="s2">&lt;&lt; a[i]</span><span class="s4">;</span>
+    <span class="s2">cout&lt;&lt;endl&lt;&lt;comparisons&lt;&lt;</span><span class="s3">&quot; &quot; </span><span class="s2">&lt;&lt;moves&lt;&lt;endl</span><span class="s4">;</span>
+<span class="s2">cout&lt;&lt;</span><span class="s3">&quot;*********************************************************************************************&quot;</span><span class="s2">&lt;&lt;endl</span><span class="s4">;</span>
+<span class="s2">cout&lt;&lt;</span><span class="s3">&quot;                       Task 2:                          &quot;</span><span class="s2">&lt;&lt;endl</span><span class="s4">;</span>
+ <span class="s2">comparisons = moves = </span><span class="s5">0</span><span class="s4">;</span>
+    <span class="s2">ifstream input</span><span class="s4">;</span>
+    <span class="s4">int </span><span class="s2">count = </span><span class="s5">0</span><span class="s4">;</span>
+    <span class="s2">input.open(</span><span class="s3">&quot;arrays.txt&quot;</span><span class="s2">)</span><span class="s4">;</span>
+    <span class="s4">while </span><span class="s2">(getline(input</span><span class="s4">, </span><span class="s2">line))++count</span><span class="s4">;</span>
+    <span class="s2">input.close()</span><span class="s4">;</span>
+    <span class="s2">input.open(</span><span class="s3">&quot;arrays.txt&quot;</span><span class="s2">)</span><span class="s4">;</span>
+    <span class="s4">if </span><span class="s2">(input.is_open()) {</span>
+        <span class="s4">while </span><span class="s2">(count--) {</span>
+            <span class="s4">int </span><span class="s2">n</span><span class="s4">;</span>
+            <span class="s2">input &gt;&gt; n</span><span class="s4">;</span>
+            <span class="s4">int </span><span class="s2">c[n]</span><span class="s4">, </span><span class="s2">a[n]</span><span class="s4">, </span><span class="s2">b[n]</span><span class="s4">, </span><span class="s2">comparison</span><span class="s4">, </span><span class="s2">moves</span><span class="s4">;</span>
+
+            <span class="s4">for </span><span class="s2">(</span><span class="s4">int </span><span class="s2">i = </span><span class="s5">0</span><span class="s4">; </span><span class="s2">i &lt; n</span><span class="s4">; </span><span class="s2">i++)</span>
+                <span class="s2">input &gt;&gt; a[i]</span><span class="s4">;</span>
+            <span class="s4">for </span><span class="s2">(</span><span class="s4">int </span><span class="s2">i = </span><span class="s5">0</span><span class="s4">; </span><span class="s2">i &lt; n</span><span class="s4">; </span><span class="s2">i++) {</span>
+                <span class="s2">b[i] = a[i]</span><span class="s4">;</span>
+                <span class="s2">c[i] = a[i]</span><span class="s4">;</span>
+            <span class="s2">}</span>
+
+            <span class="s2">cout &lt;&lt; </span><span class="s3">&quot; Original array&quot; </span><span class="s2">&lt;&lt; </span><span class="s3">&quot; : &quot;</span><span class="s4">;</span>
+            <span class="s4">for </span><span class="s2">(</span><span class="s4">int </span><span class="s2">i = </span><span class="s5">0</span><span class="s4">; </span><span class="s2">i &lt; n</span><span class="s4">; </span><span class="s2">i++)</span>
+                <span class="s2">cout &lt;&lt; a[i] &lt;&lt; </span><span class="s3">&quot; &quot;</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; </span><span class="s3">&quot; Selection Sort : &quot; </span><span class="s2">&lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">SelectionSort(a</span><span class="s4">, </span><span class="s2">n</span><span class="s4">, </span><span class="s2">comparison</span><span class="s4">, </span><span class="s2">moves)</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; </span><span class="s3">&quot;   sorted array&quot; </span><span class="s2">&lt;&lt; </span><span class="s3">&quot; : &quot;</span><span class="s4">;</span>
+            <span class="s4">for </span><span class="s2">(</span><span class="s4">int </span><span class="s2">i = </span><span class="s5">0</span><span class="s4">; </span><span class="s2">i &lt; n</span><span class="s4">; </span><span class="s2">i++)</span>
+                <span class="s2">cout &lt;&lt; a[i] &lt;&lt; </span><span class="s3">&quot; &quot;</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; </span><span class="s3">&quot;  Comparisons : &quot; </span><span class="s2">&lt;&lt; comparison</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; endl &lt;&lt; </span><span class="s3">&quot;   Moves : &quot; </span><span class="s2">&lt;&lt; </span><span class="s3">&quot; &quot; </span><span class="s2">&lt;&lt; moves &lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">comparison = moves = </span><span class="s5">0</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; </span><span class="s3">&quot; Merge Sort : &quot; </span><span class="s2">&lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">MergeSort(b</span><span class="s4">, </span><span class="s5">0</span><span class="s4">, </span><span class="s2">n - </span><span class="s5">1</span><span class="s4">, </span><span class="s2">comparison</span><span class="s4">, </span><span class="s2">moves)</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; </span><span class="s3">&quot;   sorted array&quot; </span><span class="s2">&lt;&lt; </span><span class="s3">&quot; : &quot;</span><span class="s4">;</span>
+            <span class="s4">for </span><span class="s2">(</span><span class="s4">int </span><span class="s2">i = </span><span class="s5">0</span><span class="s4">; </span><span class="s2">i &lt; n</span><span class="s4">; </span><span class="s2">i++)</span>
+                <span class="s2">cout &lt;&lt; b[i] &lt;&lt; </span><span class="s3">&quot; &quot;</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; </span><span class="s3">&quot;   Comparisons : &quot; </span><span class="s2">&lt;&lt; comparison</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; endl &lt;&lt; </span><span class="s3">&quot;   Moves : &quot; </span><span class="s2">&lt;&lt; </span><span class="s3">&quot; &quot; </span><span class="s2">&lt;&lt; moves &lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">comparison = moves = </span><span class="s5">0</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; </span><span class="s3">&quot; Shell Sort : &quot; </span><span class="s2">&lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">ShellSort(c</span><span class="s4">, </span><span class="s2">n</span><span class="s4">, </span><span class="s2">comparison</span><span class="s4">, </span><span class="s2">moves)</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; </span><span class="s3">&quot;   sorted array &quot; </span><span class="s2">&lt;&lt; </span><span class="s3">&quot; : &quot;</span><span class="s4">;</span>
+            <span class="s4">for </span><span class="s2">(</span><span class="s4">int </span><span class="s2">i = </span><span class="s5">0</span><span class="s4">; </span><span class="s2">i &lt; n</span><span class="s4">; </span><span class="s2">i++)</span>
+                <span class="s2">cout &lt;&lt; c[i] &lt;&lt; </span><span class="s3">&quot; &quot;</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; </span><span class="s3">&quot;   Comparisons : &quot; </span><span class="s2">&lt;&lt; comparison</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; endl &lt;&lt; </span><span class="s3">&quot;   Moves : &quot; </span><span class="s2">&lt;&lt; </span><span class="s3">&quot; &quot; </span><span class="s2">&lt;&lt; moves &lt;&lt; endl</span><span class="s4">;</span>
+            <span class="s2">comparison = moves = </span><span class="s5">0</span><span class="s4">;</span>
+            <span class="s2">cout &lt;&lt; </span><span class="s3">&quot; -------------------------------------------------------------&quot; </span><span class="s2">&lt;&lt; endl</span><span class="s4">;</span>
+
+
+        <span class="s2">}</span>
+        <span class="s2">input.close()</span><span class="s4">;</span>
+    <span class="s2">}</span>
+    <span class="s4">return </span><span class="s5">0</span><span class="s4">;</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

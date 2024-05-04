@@ -1,0 +1,3 @@
+C:/Users/elbia/CLionProjects/TASKAssignment1/cmake-build-debug/CMakeFiles/TASKAssignment1.dir
+C:/Users/elbia/CLionProjects/TASKAssignment1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/elbia/CLionProjects/TASKAssignment1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
